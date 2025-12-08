@@ -84,32 +84,47 @@ function FAQsPage() {
     setEditingFaq(null);
   };
 
-  const handleSave = () => {
-    const newFaq = {
-      id: editingFaq ? editingFaq.id : crypto.randomUUID(),
+  const handleSave = async () => {
+    const payload = {
       title: formData.title,
       category: formData.category,
       data: formData.data,
       metadata: {
         tags: formData.tags
           .split(",")
-          .map((tag) => tag.trim())
+          .map((t) => t.trim())
           .filter(Boolean),
         language: formData.language,
-        last_updated: new Date().toISOString(),
-        author: formData.author,
+        priority: Number(formData.priority),
         visible: formData.visible,
-        priority: parseInt(formData.priority),
+        author: formData.author,
+        last_updated: null, // Calculate @ BackEnd
       },
     };
 
-    if (editingFaq) {
-      setFaqs(faqs.map((faq) => (faq.id === editingFaq.id ? newFaq : faq)));
-    } else {
-      setFaqs([...faqs, newFaq]);
-    }
+    try {
+      if (editingFaq) {
+        // UPDATE
+        await authenticatedFetch(`/faqs/${editingFaq.id}`, {
+          method: "PUT",
+          body: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" },
+        });
+      } else {
+        // CREATE
+        await authenticatedFetch(`/faqs/`, {
+          method: "POST",
+          body: JSON.stringify(payload),
+          headers: { "Content-Type": "application/json" },
+        });
+      }
 
-    handleCloseModal();
+      handleCloseModal();
+      loadFAQs(); // refresh list
+
+    } catch (error) {
+      console.error("Save failed:", error);
+    }
   };
 
   const handleDelete = (id) => {
