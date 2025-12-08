@@ -36,19 +36,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    const data = await apiClient.post('/api/auth/login', { email, password });
+    const data = await apiClient.post('/auth/login', { email, password });
     setAccessToken(data.access_token);
     setUser(data.user);
     return data;
   };
 
   const register = async (email, password, name) => {
-    return await apiClient.post('/api/auth/register', { email, password, name });
+    return await apiClient.post('/auth/register', { email, password, name });
   };
 
   const refreshAccessToken = async () => {
     try {
-      const data = await apiClient.post('/api/auth/refresh', {});
+      const data = await apiClient.post('/auth/refresh', {});
       setAccessToken(data.access_token);
       return data.access_token;
     } catch (error) {
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
   const fetchUserProfile = async (token) => {
     try {
-      const userData = await apiClient.get('/api/auth/me', token || accessToken);
+      const userData = await apiClient.get('/auth/me', token || accessToken);
       setUser(userData);
     } catch (error) {
       console.error('Failed to fetch user profile:', error);
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await apiClient.post('/api/auth/logout', {});
+      await apiClient.post('/auth/logout', {});
     } catch (error) {
       console.error('Logout error:', error);
     } finally {

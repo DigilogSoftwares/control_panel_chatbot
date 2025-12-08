@@ -36,7 +36,6 @@ export default function SidebarLayout() {
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Top Bar - Polaris style */}
       <div className="h-16 flex items-center justify-between px-6 bg-white shadow-sm rounded-b-2xl p-4 mx-4">
-
         <div className="flex items-center">
           <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">A</span>

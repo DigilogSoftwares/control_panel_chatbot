@@ -1,21 +1,16 @@
-import React, { useState } from 'react';
-import { RefreshCw } from 'lucide-react';
-import { AuthProvider, useAuth } from './auth/AuthContext';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route
-} from "react-router-dom";
+import React, { useState } from "react";
+import { RefreshCw } from "lucide-react";
+import { AuthProvider, useAuth } from "./auth/AuthContext";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import "./App.css";
 
 import SidebarLayout from "./components/Layout";
 import FAQsPage from "./pages/FAQs";
 import Home from "./pages/Home";
-import LoginForm from './components/LoginForm';
-import RegisterForm from './components/RegisterForm';
-import Dashboard from './components/Dashboard';
-
+import LoginForm from "./components/LoginForm";
+import RegisterForm from "./components/RegisterForm";
+import Dashboard from "./components/Dashboard";
 
 // ----------------------
 // MAIN CONTENT HOLDER
@@ -51,7 +46,7 @@ const AppContent = () => {
           className="mt-4 text-blue-600 hover:text-blue-800 underline font-medium"
         >
           {showRegister
-            ? 'Already have an account? Login'
+            ? "Already have an account? Login"
             : "Don't have an account? Register"}
         </button>
       </div>
@@ -67,22 +62,19 @@ const AppContent = () => {
       </Route>
 
       {/* Extra sample route */}
-      <Route path="/faqs1" element={<FAQsPage />} />
+      <Route path="/faqs-s" element={<FAQsPage />} />
       <Route path="/dashboard" element={<Dashboard />} />
     </Routes>
   );
 };
-
 
 // ----------------------
 // COMPLETE APP WRAPPER
 // ----------------------
 export default function App() {
   return (
-    <AuthProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </AuthProvider>
+    <Router>
+      <AppContent />
+    </Router>
   );
 }

@@ -40,7 +40,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    const response = await fetch('/api/auth/login', {
+    const response = await fetch('/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include', // Important for cookies
@@ -59,7 +59,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const register = async (email, password, name) => {
-    const response = await fetch('/api/auth/register', {
+    const response = await fetch('/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password, name })
@@ -75,7 +75,7 @@ const AuthProvider = ({ children }) => {
 
   const refreshAccessToken = async () => {
     try {
-      const response = await fetch('/api/auth/refresh', {
+      const response = await fetch('/auth/refresh', {
         method: 'POST',
         credentials: 'include'
       });
@@ -95,7 +95,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const fetchUserProfile = async (token) => {
-    const response = await fetch('/api/auth/me', {
+    const response = await fetch('/auth/me', {
       headers: {
         'Authorization': `Bearer ${token || accessToken}`
       }
@@ -109,7 +109,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', {
+      await fetch('/auth/logout', {
         method: 'POST',
         credentials: 'include'
       });
@@ -393,7 +393,7 @@ const Dashboard = () => {
   const fetchProtectedData = async () => {
     setLoading(true);
     try {
-      const response = await authenticatedFetch('/api/protected/data');
+      const response = await authenticatedFetch('/protected/data');
       const data = await response.json();
       setProtectedData(data);
     } catch (error) {
