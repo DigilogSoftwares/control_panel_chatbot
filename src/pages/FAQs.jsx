@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 function FAQsPage() {
-  const { authenticatedFetch } = useAuth();
+  const { user, authenticatedFetch } = useAuth();
   const [faqs, setFaqs] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -97,7 +97,7 @@ function FAQsPage() {
         language: formData.language,
         priority: Number(formData.priority),
         visible: formData.visible,
-        author: formData.author,
+        author: user?.name,
         last_updated: null, // Calculate @ BackEnd
       },
     };
@@ -121,15 +121,22 @@ function FAQsPage() {
 
       handleCloseModal();
       loadFAQs(); // refresh list
-
     } catch (error) {
       console.error("Save failed:", error);
     }
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this FAQ?")) {
-      setFaqs(faqs.filter((faq) => faq.id !== id));
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this FAQ?")) return;
+
+    try {
+      await authenticatedFetch(`/faqs/${id}`, {
+        method: "DELETE",
+      });
+
+      loadFAQs();
+    } catch (err) {
+      console.error("Delete failed:", err);
     }
   };
 
