@@ -59,6 +59,10 @@ const AppContent = () => {
       <Route element={<SidebarLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/faqs" element={<FAQsPage />} />
+        <Route path="/chat" element={<FAQsPage />} />
+        <Route path="/calendar" element={<FAQsPage />} />
+        <Route path="/documents" element={<FAQsPage />} />
+        <Route path="/reports" element={<FAQsPage />} />
       </Route>
 
       {/* Extra sample route */}
